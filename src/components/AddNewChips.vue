@@ -20,7 +20,9 @@
 export default {
   name: "AddNewChips",
   data() {
-    return {};
+    return {
+      message: "",
+    };
   },
   methods: {},
 };

@@ -2,7 +2,7 @@
   <div class="row">
     <div
       @click="addSelected(selection)"
-      v-for="selection in selections"
+      v-for="selection in TAGS"
       :key="selection.title"
     >
       <v-chip
@@ -13,38 +13,34 @@
         close
         close-icon="mdi-close-outline"
         @click:close="
-          tagsUsed = tagsUsed.filter((el) => el !== selection.title);
+          DELETE_TAG(selection.title);
           selection.use = false;
         "
       >
         {{ selection.title }}
       </v-chip>
     </div>
-    <div>{{ tagsUsed }}</div>
+    <div>{{ GET_TAGS_USED }}</div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Chips",
   data() {
-    return {
-      tagsUsed: [],
-      selections: [
-        {
-          title: "Comedy",
-          use: false,
-        },
-        { title: "Western", use: false },
-        { title: "Adventure", use: false },
-      ],
-    };
+    return {};
   },
+  computed: {
+    ...mapGetters(["TAGS", "GET_TAGS_USED"]),
+  },
+
   methods: {
-    // Chips addSelected
+    ...mapActions(["USE_TAGS", "DELETE_TAG"]),
     addSelected(selection) {
-      if (!this.selected.includes(selection.title)) {
-        this.selected.push(selection.title);
+      if (!this.GET_TAGS_USED.includes(selection.title)) {
+        this.GET_TAGS_USED.push(selection.title);
         selection.use = true;
       }
     },
