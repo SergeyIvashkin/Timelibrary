@@ -28,11 +28,21 @@ export default {
     // LOAD_TASKS(state, payload) {
     //   state.tasks = payload;
     // },
+    SET_TASK_COMPLETED(state, listTask) {
+      for (const obj of state.tasks) {
+        if (listTask.includes(obj.title)) {
+          obj.completed = true;
+        }
+      }
+    },
     NEW_TASK(state, objNewTask) {
       state.tasks.push(objNewTask);
     },
   },
   actions: {
+    async TASK_COMPLETED({ commit }, listTask) {
+      await commit("SET_TASK_COMPLETED", listTask);
+    },
     NEW_TASK({ commit }, objNewTask) {
       commit("NEW_TASK", objNewTask);
     },
@@ -40,6 +50,12 @@ export default {
   getters: {
     TASKS(state) {
       return state.tasks;
+    },
+    TASK_COPMLETED(state) {
+      return state.tasks.filter((el) => el.completed);
+    },
+    TASK_NO_COMPLETED(state) {
+      return state.tasks.filter((el) => el.completed === false);
     },
   },
 };

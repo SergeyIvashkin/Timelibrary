@@ -16,6 +16,14 @@ export default {
     tagsUsed: [],
   },
   mutations: {
+    SET_NEW_TAG(state, name) {
+      let newTag = {
+        title: name,
+        use: true,
+      };
+      state.tags.push(newTag);
+      state.tagsUsed.push(name);
+    },
     SET_USE_TAGS(state, payload) {
       state.tagsUsed.pusg(payload);
     },
@@ -24,7 +32,10 @@ export default {
     },
   },
   actions: {
-    USE_TAGS({ commit, payload }) {
+    ADD_NEW_TAG({ commit }, name) {
+      commit("SET_NEW_TAG", name);
+    },
+    USE_TAGS({ commit }, payload) {
       commit("SET_USE_TAGS", payload);
     },
     DELETE_TAG({ commit }, tag) {

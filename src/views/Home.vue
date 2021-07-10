@@ -32,7 +32,7 @@
       <span>{{ filmTime }}</span>
     </h4>
     <h4 v-if="radioVal === 'Serial'">
-      Total Film Serial <span> {{ serialTime }}</span>
+      Total Film Serial: <span> {{ serialTime }}</span>
     </h4>
     <!-- Block Film -->
     <v-col>
@@ -48,9 +48,7 @@
           </v-col>
         </v-row>
         <!--  Show time -->
-        <p>
-          {{ filmTime }}
-        </p>
+        <p></p>
       </div>
       <!-- Block Serial -->
       <div v-if="radioVal === 'Serial'">
@@ -90,7 +88,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+
 import Chips from "../components/Chips.vue";
 import AddNewChips from "../components/AddNewChips.vue";
 
@@ -116,6 +115,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters(["GET_TAGS_USED"]),
     // FILM Total Time
     filmTime() {
       let min = this.filmHours * 60 + this.filmMinutes * 1;
@@ -136,12 +136,21 @@ export default {
       return hours + " Hours " + min + " Minutes";
     },
     ...mapActions(["NEW_TASK"]),
+    // Submit NEW TASK
     addNewTask() {
       if (this.title === "") {
         return;
       } else if (!this.radioVal) {
         this.errorRadio = true;
         return;
+      }
+
+      // Time (What Watch)
+      let time;
+      if (this.radioVal === "Film") {
+        time = this.filmTime;
+      } else {
+        time = this.serialTime;
       }
 
       let newTask = {
@@ -151,6 +160,8 @@ export default {
         whatWatch: this.radioVal,
         completed: false,
         editing: false,
+        tagUsed: this.GET_TAGS_USED,
+        time,
       };
       (this.title = ""), (this.description = "");
 
