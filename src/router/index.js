@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home";
 import Task from "../views/Task";
+import Registration from "../views/Registration";
+import Login from "../views/Login";
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,16 @@ const routes = [
     path: "/task",
     name: "Task",
     component: Task,
+  },
+  {
+    path: "/registration",
+    name: "Registration",
+    component: Registration,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
 ];
 

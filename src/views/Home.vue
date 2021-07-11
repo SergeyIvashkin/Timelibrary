@@ -3,13 +3,14 @@
     <h1 class="mb-5">Home</h1>
     <v-col cols="12" sm="6" md="3" class="pa-0">
       <v-text-field
-        :rules="rules"
         @keyup.enter="addNewTask"
         v-model="title"
         label="What we will watch ?"
         placeholder="Placeholder"
         solo
-      ></v-text-field>
+      >
+      </v-text-field>
+      <p v-if="errorTitle">Required <v-icon> mdi-arrow-up </v-icon></p>
     </v-col>
     <!--  -->
     <v-col cols="12" md="6" class="pa-0">
@@ -84,6 +85,15 @@
       <AddNewChips />
       <Chips />
     </v-col>
+    <v-btn
+      elevation="2"
+      color="primary"
+      outlined
+      class="float-right"
+      @click="addNewTask"
+    >
+      SEND</v-btn
+    >
   </div>
 </template>
 
@@ -98,9 +108,9 @@ export default {
   components: { Chips, AddNewChips },
   data() {
     return {
+      errorTitle: false,
       errorRadio: false,
       isRed: false,
-      rules: [(value) => !!value || "Required."],
       title: "",
       description: "",
       radioVal: null,
@@ -139,11 +149,14 @@ export default {
     // Submit NEW TASK
     addNewTask() {
       if (this.title === "") {
+        this.errorTitle = true;
         return;
       } else if (!this.radioVal) {
+        this.errorTitle = false;
         this.errorRadio = true;
         return;
       }
+      this.errorRadio = false;
 
       // Time (What Watch)
       let time;
@@ -178,5 +191,9 @@ export default {
 p {
   color: red;
   font-size: 13px;
+}
+.v-icon.v-icon {
+  color: red;
+  font-size: 18px;
 }
 </style>
