@@ -55,10 +55,13 @@
       Do tou have account?
       <router-link to="/login"> Enter Here </router-link>
     </div>
+    <div class="red--text">{{ submitStatus }}</div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Registration",
   data: () => ({
@@ -68,10 +71,10 @@ export default {
     email: "",
     repeatPassword: "",
     password: "",
+    submitStatus: "",
     passwordRules: [
       (value) => !!value || "Required.",
       (v) => v.length >= 5 || "Name must be more than 5 characters",
-      // () => `The email and password you entered don't match`,
     ],
 
     emailRules: [
@@ -80,8 +83,20 @@ export default {
     ],
   }),
   methods: {
-    submit() {
-      console.log(this.$refs.form.validate());
+    ...mapActions(["REGISTER_USER"]),
+    async submit() {
+      if (this.$refs.form.validate()) {
+        const user = {
+          email: this.email,
+          password: this.password,
+        };
+        try {
+          await this.REGISTER_USER(user);
+          this.$router.push("/");
+        } catch (error) {
+          this.submitStatus = error.message;
+        }
+      }
     },
   },
   computed: {

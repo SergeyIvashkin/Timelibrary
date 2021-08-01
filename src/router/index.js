@@ -1,4 +1,5 @@
 import Vue from "vue";
+import store from "../store";
 import VueRouter from "vue-router";
 import Home from "../views/Home";
 import Task from "../views/Task";
@@ -12,11 +13,17 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: (to, from, next) => {
+      store.getters.CHECK_USER ? next() : next("/login");
+    },
   },
   {
     path: "/task",
     name: "Task",
     component: Task,
+    beforeEnter: (to, from, next) => {
+      store.getters.CHECK_USER ? next() : next("/login");
+    },
   },
   {
     path: "/registration",

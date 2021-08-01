@@ -45,10 +45,13 @@
       Need Registration?
       <router-link to="/registration"> Enter Here </router-link>
     </div>
+    <div class="red--text">{{ submitStatus }}</div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Login",
   data: () => ({
@@ -56,6 +59,7 @@ export default {
     show: false,
     email: "",
     password: "",
+    submitStatus: "",
     passwordRules: [
       (value) => !!value || "Required.",
       (v) => v.length >= 5 || "Name must be more than 5 characters",
@@ -68,8 +72,20 @@ export default {
     ],
   }),
   methods: {
-    submit() {
-      console.log(this.$refs.form.validate());
+    ...mapActions(["LOGIN_USER"]),
+    async submit() {
+      if (this.$refs.form.validate()) {
+        const user = {
+          email: this.email,
+          password: this.password,
+        };
+        try {
+          await this.LOGIN_USER(user);
+          this.$router.push("/");
+        } catch (error) {
+          this.submitStatus = error.message;
+        }
+      }
     },
   },
 };
