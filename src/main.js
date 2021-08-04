@@ -35,6 +35,10 @@ new Vue({
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch("LOGGED_USER", user);
+        this.$router.push("/");
+
+        // Loading All Tasks
+        this.$store.dispatch("loadTasks");
       }
     });
   },

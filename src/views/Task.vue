@@ -16,47 +16,25 @@
       </div>
     </div>
 
-    <v-card
-      class="mb-5 pa-3"
-      max-width="444"
+    <CardTask
       v-for="task in filterTask"
       :key="task.id"
       :class="{ completed: task.completed }"
-      :disabled="(completedCard = task.completed)"
-    >
-      <div class="card_top pb-5">
-        <span class="title">{{ task.whatWatch }}</span>
-        <span class="ml-3"> Total Time: {{ task.time }} </span>
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-close </v-icon>
-        </v-btn>
-      </div>
-
-      <v-list-item-title class="pb-5 text-h5 mb-1 d-flex align-center">
-        <v-checkbox
-          @change="onChangeSelectedTask"
-          :value="task.title"
-          v-model="selected"
-          color="secondary"
-        ></v-checkbox>
-        {{ task.title }}
-      </v-list-item-title>
-      <v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
-      <div class="d-flex justify justify-start">
-        <div v-for="el in task.tagUsed" :key="el" class="mr-1">
-          <v-chip> {{ el }} </v-chip>
-        </div>
-      </div>
-    </v-card>
+      :task="task"
+      @completedTask="completedTask"
+      @editTask="editTask"
+    />
   </div>
 </template>
 
 <script>
+import CardTask from "../components/CardTask";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Task",
+  components: {
+    CardTask,
+  },
   data() {
     return {
       completedCard: false,
@@ -77,13 +55,17 @@ export default {
       if (this.active === "All") {
         return this.TASKS;
       }
+      console.log(this.TASKS);
       return this.TASKS;
     },
   },
   methods: {
-    ...mapActions(["TASK_COMPLETED"]),
-    onChangeSelectedTask() {
-      this.TASK_COMPLETED(this.selected);
+    ...mapActions(["TASK_COMPLETED", "EDIT_TASK"]),
+    completedTask(id) {
+      this.TASK_COMPLETED(id);
+    },
+    editTask(newData) {
+      this.EDIT_TASK(newData);
     },
   },
 };
@@ -94,17 +76,7 @@ export default {
   max-width: 444px;
   margin: auto;
 }
-.card_top {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.title {
-  background: grey;
-  padding: 0px 15px;
-  color: white;
-  font-weight: 300;
-}
+
 .active {
   color: #7979de;
   border: 2px solid #7979de;

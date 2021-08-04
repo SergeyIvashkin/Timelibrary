@@ -145,7 +145,7 @@ export default {
       let min = minutes % 60;
       return hours + " Hours " + min + " Minutes";
     },
-    ...mapActions(["NEW_TASK"]),
+    ...mapActions(["NEW_TASK", "CLEAN_OFF_TAGS"]),
     // Submit NEW TASK
     addNewTask() {
       if (this.title === "") {
@@ -154,6 +154,7 @@ export default {
       } else if (!this.radioVal) {
         this.errorTitle = false;
         this.errorRadio = true;
+
         return;
       }
       this.errorRadio = false;
@@ -167,7 +168,7 @@ export default {
       }
 
       let newTask = {
-        id: Math.random(),
+        // id: Math.random(),
         title: this.title,
         description: this.description,
         whatWatch: this.radioVal,
@@ -179,6 +180,8 @@ export default {
       (this.title = ""), (this.description = "");
 
       this.NEW_TASK(newTask);
+      this.radioVal = null;
+      this.CLEAN_OFF_TAGS();
     },
   },
 };

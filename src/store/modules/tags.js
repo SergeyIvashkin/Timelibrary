@@ -30,6 +30,10 @@ export default {
     SET_DELETE_TAG(state, tag) {
       state.tagsUsed = state.tagsUsed.filter((el) => el !== tag);
     },
+    CLEAN_OFF_TAGS(state) {
+      state.tags.forEach((el) => (el.use = false));
+      state.tagsUsed = [];
+    },
   },
   actions: {
     ADD_NEW_TAG({ commit }, name) {
@@ -40,6 +44,9 @@ export default {
     },
     DELETE_TAG({ commit }, tag) {
       commit("SET_DELETE_TAG", tag);
+    },
+    CLEAN_OFF_TAGS({ commit }) {
+      commit("CLEAN_OFF_TAGS");
     },
   },
   getters: {

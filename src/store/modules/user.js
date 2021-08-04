@@ -19,7 +19,6 @@ export default {
       const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      console.log(user);
       commit("SET_USER", new User(user.user.uid));
     },
     // Login page

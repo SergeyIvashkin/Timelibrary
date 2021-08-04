@@ -20,7 +20,6 @@
         {{ selection.title }}
       </v-chip>
     </div>
-    <div>{{ GET_TAGS_USED }}</div>
   </div>
 </template>
 
