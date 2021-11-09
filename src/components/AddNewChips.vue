@@ -25,7 +25,7 @@ export default {
   name: "AddNewChips",
   data() {
     return {
-      message: "",
+      message: "ggg",
       visible: false,
     };
   },
