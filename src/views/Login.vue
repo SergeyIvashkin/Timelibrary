@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-col>
-      <h1>Login</h1>
-    </v-col>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <div class="block">
       <v-col>
-        <v-col cols="12" md="4" class="ma-auto">
+        <h1>Login</h1>
+      </v-col>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-col>
           <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -14,7 +14,7 @@
           ></v-text-field>
         </v-col>
         <!--  -->
-        <v-col cols="12" md="4" class="ma-auto">
+        <v-col>
           <v-text-field
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="passwordRules"
@@ -27,7 +27,7 @@
         </v-col>
         <!--  -->
 
-        <v-col cols="12">
+        <v-col>
           <v-btn
             class="mr-4"
             @click.prevent="submit"
@@ -39,13 +39,13 @@
             Login
           </v-btn>
         </v-col>
+      </v-form>
+      <v-col>
+        Need Registration?
+        <router-link to="/registration"> Enter Here </router-link>
       </v-col>
-    </v-form>
-    <div>
-      Need Registration?
-      <router-link to="/registration"> Enter Here </router-link>
+      <v-col class="red--text">{{ submitStatus }}</v-col>
     </div>
-    <div class="red--text">{{ submitStatus }}</div>
   </div>
 </template>
 
@@ -92,6 +92,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.block {
+  margin: auto;
+  max-width: 450px;
+}
 .col-12 {
   padding: 0;
 }
