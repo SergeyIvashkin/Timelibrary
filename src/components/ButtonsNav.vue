@@ -59,6 +59,7 @@ export default {
         return [
           { title: "Home", url: "/" },
           { title: "Task", url: "/task" },
+          { title: "Test", url: "/test2" },
         ];
       }
       return [

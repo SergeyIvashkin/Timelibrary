@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       message: "ggg",
-      visible: false,
+      visible: true,
     };
   },
   methods: {

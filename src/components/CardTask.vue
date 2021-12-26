@@ -88,6 +88,7 @@
 import { mapActions } from "vuex";
 
 export default {
+  name: "CardTask",
   props: {
     task: {
       type: Object,

@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1 class="mb-5">Home</h1>
+    <span class="head">
+      <h1 @mouseleave="isHome = false" @click="isHome = true" class="mb-5 home">
+        Home
+      </h1>
+      <span class="word" v-if="!isHome">Нажми чтоб скачать</span>
+      <span class="word" v-else>Cкачено</span>
+    </span>
     <v-col cols="12" sm="6" md="3" class="pa-0">
       <v-text-field
         @keyup.enter="addNewTask"
@@ -108,6 +114,7 @@ export default {
   components: { Chips, AddNewChips },
   data() {
     return {
+      isHome: false,
       errorTitle: false,
       errorRadio: false,
       isRed: false,
@@ -123,7 +130,11 @@ export default {
       serialSeriesMinutes: 40,
     };
   },
-
+  watch: {
+    description: (v) => {
+      console.log(v);
+    },
+  },
   computed: {
     ...mapGetters(["GET_TAGS_USED"]),
     // FILM Total Time
@@ -139,6 +150,17 @@ export default {
     },
   },
   methods: {
+    // outSide(e) {
+    //   console.log(e.target.classList);
+
+    // let classNeed = e.target.classList;
+    // let home = "home";
+    // let arr = classNeed.includes(home);
+
+    // if (arr) {
+    //   console.log("no");
+    // }
+    // },
     // COMMON Total Time
     getHoursAndMinutes(minutes) {
       let hours = Math.trunc(minutes / 60);
@@ -198,5 +220,13 @@ p {
 .v-icon.v-icon {
   color: red;
   font-size: 18px;
+}
+.word {
+  display: none;
+}
+.head:hover {
+  .word {
+    display: block;
+  }
 }
 </style>

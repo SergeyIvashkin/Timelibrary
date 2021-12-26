@@ -6,6 +6,8 @@ import Task from "../views/Task";
 import Registration from "../views/Registration";
 import Login from "../views/Login";
 
+import Test2 from "../views/Test2";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -24,6 +26,11 @@ const routes = [
     beforeEnter: (to, from, next) => {
       store.getters.CHECK_USER ? next() : next("/login");
     },
+  },
+  {
+    path: "/test2",
+    name: "Test2",
+    component: Test2,
   },
   {
     path: "/registration",
